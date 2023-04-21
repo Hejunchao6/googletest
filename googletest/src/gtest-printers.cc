@@ -42,7 +42,7 @@
 
 #include "gtest/gtest-printers.h"
 
-#include <stdio.h>
+#include <cstdio>
 
 #include <cctype>
 #include <cstdint>
@@ -301,8 +301,8 @@ void PrintTo(__uint128_t v, ::std::ostream* os) {
   // Some configurations have a __uint128_t, but no support for built in
   // division. Do manual long division instead.
 
-  uint64_t high = static_cast<uint64_t>(v >> 64);
-  uint64_t low = static_cast<uint64_t>(v);
+  auto high = static_cast<uint64_t>(v >> 64);
+  auto low = static_cast<uint64_t>(v);
 
   *--p = 0;
   while (high != 0 || low != 0) {
@@ -322,7 +322,7 @@ void PrintTo(__uint128_t v, ::std::ostream* os) {
   *os << p;
 }
 void PrintTo(__int128_t v, ::std::ostream* os) {
-  __uint128_t uv = static_cast<__uint128_t>(v);
+  auto uv = static_cast<__uint128_t>(v);
   if (v < 0) {
     *os << "-";
     uv = -uv;
